@@ -1,0 +1,59 @@
+<?php
+$title = 'Contactos';
+$this->headTitle($title);
+?>
+<h1><?=$this->escapeHtml($title)?></h1>
+<p>
+    <button class="btn" data-toggle="collapse" data-target="#Form" style="color:#5252e0">Agregar nuevo contacto</button>
+	<div id="Form" class="collapse">
+<?php
+$form = $this->form;
+
+$form->prepare();
+
+$form->setAttributes(array(
+    'action' => $this->url($this->module, array('action' => $this->action)),
+    'metod'  => 'POST'));
+
+$formLabel = $this->plugin('formLabel', array('class' => 'sr-only'));
+
+echo $this->form()->openTag($form);
+
+foreach ($form as $key => $value) {
+    echo '<div class="form-group">';
+    $element = $form->get($key);
+    try {
+        echo $this->formLabel($element);
+    } catch (Exception $e) {
+
+    }
+    echo $this->formElement($element);
+    echo $this->formElementErrors($element);
+    echo '</div>';
+}
+
+echo $this->form()->closeTag($form);
+?>
+	</div>
+</p>
+<table class="table table-hover">
+<tr>
+    <th>idContacto</th>
+    <th>Nombre</th>
+    <th>Telefono</th>
+    <th>e-mail</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($data as $item): ?>
+    <tr>
+        <td><?=$this->escapeHtml($item->idContacto)?></td>
+        <td><?=$this->escapeHtml($item->nombre)?></td>
+        <td><?=$this->escapeHtml($item->telefono)?></td>
+        <td><?=$this->escapeHtml($item->correo)?></td>
+        <td>
+            <a href="<?=$this->url('contacto', ['action' => 'edit', 'id' => $item->idContacto])?>">Editar</a>
+            <a href="<?=$this->url('contacto', ['action' => 'delete', 'id' => $item->idContacto])?>">Borrar</a>
+        </td>
+    </tr>
+<?php endforeach;?>
+</table>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <?=$this->headTitle('Agenda')->setAutoEscape(false)?>
+
+        <?=$this->headMeta()
+->appendName('viewport', 'width=device-width, initial-scale=1.0')
+->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+?>
+
+        <!-- Le styles -->
+        <?=$this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
+->prependStylesheet($this->basePath('css/style.css'))
+->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+?>
+
+        <!-- Scripts -->
+        <?=$this->headScript()
+->prependFile($this->basePath('js/bootstrap.min.js'))
+->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+?>
+</head>
+<body>
+
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <h4>CRUD</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="<?= $this->url('home') ?> ">Agenda</a></li>
+        <li><a href="<?= $this->url('contacto')  ?> ">Contactos</a></li>
+        <li><a href="<?= $this->url('categoria') ?> ">Categorias</a></li>
+      </ul><br>
+    </div>
+
+    <div class="col-sm-9">
+        <?=$this->content?>
+        <hr>
+        <footer class="container-fluid">
+          <p align="right">&copy;<?=date('Y')?> by Victor Chavez. All rights reserved. <br> <?=\Agenda\Module::VERSION?></p>
+        </footer>
+    </div>
+</div>
+
+</body>
+</html>
