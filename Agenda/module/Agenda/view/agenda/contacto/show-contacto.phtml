@@ -6,34 +6,37 @@ $this->headTitle($title);
 <p>
     <button class="btn" data-toggle="collapse" data-target="#Form" style="color:#5252e0">Agregar nuevo contacto</button>
 	<div id="Form" class="collapse">
-<?php
-$form = $this->form;
+		<?php
+			$form = $this->form;
 
-$form->prepare();
+			$form->prepare();
 
-$form->setAttributes(array(
-    'action' => $this->url($this->module, array('action' => $this->action)),
-    'metod'  => 'POST'));
+			$form->setAttributes(array(
+			    'action' => $this->url($this->module, array('action' => $this->action)),
+			    'metod'  => 'POST'));
 
-$formLabel = $this->plugin('formLabel', array('class' => 'sr-only'));
+			$formLabel = $this->plugin('formLabel', array('class' => 'sr-only'));
 
-echo $this->form()->openTag($form);
+			echo $this->form()->openTag($form);
 
-foreach ($form as $key => $value) {
-    echo '<div class="form-group">';
-    $element = $form->get($key);
-    try {
-        echo $this->formLabel($element);
-    } catch (Exception $e) {
+			foreach ($form as $key => $value) {
+			    echo '<div class="form-group">';
+			    $element = $form->get($key);
+			    try {
+			        echo $this->formLabel($element);
+			    } catch (Exception $e) {
 
-    }
-    echo $this->formElement($element);
-    echo $this->formElementErrors($element);
-    echo '</div>';
-}
+			    }
+			    if ($key === 'idContacto') {
+			        $element->setAttributes(['value' => $newId]);
+			    }
+			    echo $this->formElement($element);
+			    echo $this->formElementErrors($element);
+			    echo '</div>';
+			}
 
-echo $this->form()->closeTag($form);
-?>
+			echo $this->form()->closeTag($form);
+		?>
 	</div>
 </p>
 <table class="table table-hover">

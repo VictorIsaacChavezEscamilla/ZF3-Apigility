@@ -28,6 +28,9 @@ $this->headTitle($title);
 			    } catch (Exception $e) {
 
 			    }
+			    if ($key === 'idCategoria') {
+			        $element->setAttributes(['value' => $newId]);
+			    }
 			    echo $this->formElement($element);
 			    echo $this->formElementErrors($element);
 			    echo '</div>';

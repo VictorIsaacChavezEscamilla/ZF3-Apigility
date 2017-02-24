@@ -18,21 +18,24 @@ class ContactoController extends AbstractActionController
     {
         $data = (new Contactos)->fetchAll();
         $form = new Forms('Contacto', 'Contacto');
-        return new ViewModel(['form' => $form, 'data' => $data]);
+        $arr = [];
+/*echo "<pre>";
+print_r($data);
+echo "</pre>";*/
+        foreach ($data as $key => $value)
+        {
+            array_push($arr, $value->idContacto);
+        }
+
+        $newId = max($arr) + 1;
+
+        return new ViewModel(['form' => $form, 'data' => $data, 'newId' => $newId]);
     }
 
     public function addAction()
     {
-    	$arr = [];
-        foreach ($this->getRequest()->getPost() as $key => $value) {
-            $tmp[$key] = $value;
-            $arr += $tmp; 	
-        }
+        $tmp = (new Contactos)->addRow($this->getRequest()->getPost());
 
-        $tmp = (new Contactos)->addRow($arr);
-echo "<pre>";
-print_r($tmp);
-echo "</pre>";
         return $this->redirect()->toRoute('contacto');
     }
 }

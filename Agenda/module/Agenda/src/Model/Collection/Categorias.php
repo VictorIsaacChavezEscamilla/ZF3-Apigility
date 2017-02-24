@@ -5,6 +5,7 @@ namespace Agenda\Model\Collection;
 use Agenda\Module;
 use Zend\Http\Client as HttpClient;
 use Zend\Http\PhpEnvironment\Response as HttpResponse;
+use Zend\Http\Request;
 
 /**
  *
@@ -22,22 +23,28 @@ class Categorias
     {
         $arr = [];
         foreach (self::dataResponse('get') as $key => $value) {
-            $tmp[((array) $value)['idCategoria']] = ((array) $value)['nombre'];
+            $tmp[$value->idCategoria] = ($value)->nombre;
             $arr += $tmp;
         }
 
         return $arr;
     }
 
+    public function addRow($row)
+    {
+        return self::dataResponse('create', $row);
+    }
+
     private function dataResponse($action, $params = null)
     {
         $client = new HttpClient();
         $client->setAdapter('Zend\Http\Client\Adapter\Curl');
+        $uri = Module::BASE_URL_API_REST . '/categoria';
 
-        $client->setUri(Module::BASE_URL_API_REST . '/categoria');
+        $client->setUri($uri);
         $client->setHeaders([
             'Accept'       => 'application/json',
-            'Content-Type' => 'application/json',
+            'Content-Type' => 'multipart/form-data',
         ]);
 
         switch ($action) {
@@ -45,9 +52,28 @@ class Categorias
                 $client->setMethod('GET');
                 break;
             case 'create':
-                $client->setMethod('POST');
-                $client->setParameterPOST($params);
-                break;
+                $request = new Request();
+                $request->setUri($uri);
+                $request->setMethod('POST');
+                foreach ($params as $key => $value) {
+                    $request->getPost()->set($key, $value);
+                }
+
+                $response = $client->send($request);
+
+                if (!$response->isSuccess()) {
+                    $message = $response->getStatusCode() . ': ' . $response->getReasonPhrase();
+
+                    if ($response->getStatusCode() !== '404') {
+                        $response = $this->getResponse();
+                        $response->setContent($message);
+                        return ['Error' => $message];
+                    } else {
+                        return ['Msj' => 'OK'];
+                    }
+                }
+
+                return ['Msj' => 'OK'];
         }
 
         $response = $client->send();

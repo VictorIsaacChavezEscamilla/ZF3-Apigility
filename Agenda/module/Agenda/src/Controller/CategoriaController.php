@@ -7,17 +7,32 @@
 
 namespace Agenda\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Agenda\Forms\Forms;
 use Agenda\Model\Collection\Categorias;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class CategoriaController extends AbstractActionController
 {
     public function showCategoriaAction()
     {
-        $data =  (new Categorias)->fetchAll();
-        $form   = new Forms('Categoria', 'Categoria');
-        return new ViewModel(array('form' => $form ,'data' => $data));
+        $data = (new Categorias)->fetchAll();
+        $form = new Forms('Categoria', 'Categoria');
+        $arr = [];
+
+        foreach ($data as $key => $value) {
+            array_push($arr, $value->idCategoria);
+        }
+
+        $newId = max($arr) + 1;
+
+        return new ViewModel(['form' => $form, 'data' => $data, 'newId' => $newId]);
+    }
+
+    public function addAction()
+    {
+        $tmp = (new Categorias)->addRow($this->getRequest()->getPost());
+
+        return $this->redirect()->toRoute('categoria');
     }
 }
