@@ -1,0 +1,38 @@
+<?php
+$title = 'Categoria - Edicion';
+$this->headTitle($title);
+?>
+<h1><?=$this->escapeHtml($title)?></h1>
+<p>
+	<?php
+		$form = $this->form;
+
+		$form->prepare();
+
+		$form->setAttributes(array(
+		    'action' => $this->url($this->module, array('action' => $this->action)),
+		    'metod'  => 'POST'));
+
+		$formLabel = $this->plugin('formLabel', array('class' => 'sr-only'));
+
+		echo $this->form()->openTag($form);
+
+		foreach ($form as $key => $value) {
+		    echo '<div class="form-group">';
+		    $element = $form->get($key);
+		    try {
+		        echo $this->formLabel($element);
+		    } catch (Exception $e) {
+
+		    }
+		    if ($key !== 'btnGuardar') {
+		        $element->setAttributes(['value' => $item->$key]);
+		    }
+		    echo $this->formElement($element);
+		    echo $this->formElementErrors($element);
+		    echo '</div>';
+		}
+
+		echo $this->form()->closeTag($form);
+	?>
+</p>

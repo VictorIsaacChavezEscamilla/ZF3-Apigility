@@ -27,7 +27,11 @@ return [
             'contacto' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/contacto[/:action]',
+                    'route'    => '/contacto[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
                     'defaults' => [
                         'controller' => Controller\ContactoController::class,
                         'action'     => 'showContacto',
@@ -37,7 +41,11 @@ return [
             'categoria' => [
                 'type'    => Segment::class,
                 'options' => [
-                    'route'    => '/categoria[/:action]',
+                    'route'    => '/categoria[/:action[/:id]]',
+                    'constraints' => [
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ],
                     'defaults' => [
                         'controller' => Controller\CategoriaController::class,
                         'action'     => 'showCategoria',

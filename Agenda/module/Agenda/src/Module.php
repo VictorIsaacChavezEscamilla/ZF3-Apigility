@@ -9,7 +9,7 @@ namespace Agenda;
 
 class Module
 {
-    const VERSION = '1.0.0dev';
+    const VERSION = '1.0.2';
     const BASE_URL_API_REST = 'http://localhost:8080';
 
     public function getConfig()

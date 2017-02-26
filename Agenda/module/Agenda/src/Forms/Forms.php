@@ -3,9 +3,9 @@
 namespace Agenda\Forms;
 
 //use Zend\Form\View\Helper\Captcha;
+use Agenda\Model\Collection\Categorias;
 use Zend\Form\Element;
 use Zend\Form\Form;
-use Agenda\Model\Collection\Categorias;
 
 /**
  *
@@ -13,16 +13,16 @@ use Agenda\Model\Collection\Categorias;
 class Forms extends Form
 {
 
-    public function __construct($name = null, $tipo = null)
+    public function __construct($action, $name = null, $tipo = null)
     {
         parent::__construct($name);
 
         switch ($tipo) {
             case 'Contacto':
-                self::constructFormContacto();
+                self::constructFormContacto($action);
                 break;
             case 'Categoria':
-                self::constructFormCategoria();
+                self::constructFormCategoria($action);
                 break;
             default:
                 self::constructFormEmpty();
@@ -34,9 +34,9 @@ class Forms extends Form
     {
     }
 
-    private function constructFormContacto()
+    private function constructFormContacto($action)
     {
-        $this->setAttribute('Action', '/contacto/add');
+        $this->setAttribute('Action', '/contacto/' . $action);
 
         $this->add((new Element\Hidden('idContacto')));
 
@@ -84,9 +84,9 @@ class Forms extends Form
                 ));
     }
 
-    private function constructFormCategoria()
+    private function constructFormCategoria($action)
     {
-        $this->setAttribute('Action', '/categoria/add');
+        $this->setAttribute('Action', '/categoria/' . $action);
 
         $this->add((new Element\Hidden('idCategoria')));
 
@@ -98,7 +98,7 @@ class Forms extends Form
                 ))
         );
 
-        $this->add((new Element\Text('Descripcion'))
+        $this->add((new Element\Text('descripcion'))
                 ->setLabel('Descripcion: ')
                 ->setAttributes(array(
                     'class'       => 'form-control',

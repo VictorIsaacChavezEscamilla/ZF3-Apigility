@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 24-02-2017 a las 00:22:45
+-- Tiempo de generación: 26-02-2017 a las 04:42:12
 -- Versión del servidor: 10.1.19-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -37,8 +37,7 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`idCategoria`, `nombre`, `descripcion`) VALUES
-(1, 'Favoritos', 'Categoria de favoritos'),
-(2, 'Familia', 'Familiares');
+(1, 'Categoria Default', 'Categoria por default');
 
 -- --------------------------------------------------------
 
@@ -53,14 +52,6 @@ CREATE TABLE `contacto` (
   `correo` varchar(320) DEFAULT NULL,
   `idCategoria` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `contacto`
---
-
-INSERT INTO `contacto` (`idContacto`, `nombre`, `telefono`, `correo`, `idCategoria`) VALUES
-(1, 'Victor Isaac Chavez Escamilla', '3338306430', 'victor_neptuno@hotmail.com', 1),
-(2, 'Joel Alejandro Morales Garcia', '123123123123', 'joel.morales@hotmail.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -87,7 +78,7 @@ ALTER TABLE `contacto`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- Restricciones para tablas volcadas
 --

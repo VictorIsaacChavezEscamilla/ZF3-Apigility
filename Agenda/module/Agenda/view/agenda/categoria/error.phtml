@@ -1,0 +1,17 @@
+<?php
+$title = 'Categorias';
+$this->headTitle($title);
+?>
+<h1><?=$this->escapeHtml($title)?></h1>
+<p>
+<div class="alert alert-danger" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">Error:</span>
+ <?php echo $msjError; ?>
+</div>
+</p>
+<p>
+<form action="/categoria">
+	<button class="btn" type="submit">Aceptar</button>
+</form>
+</p>
